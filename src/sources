@@ -1,0 +1,13 @@
+TARGETNAME=firadisk
+TARGETPATH=obj
+
+TARGETTYPE=DRIVER
+TARGETLIBS=$(DDK_LIB_PATH)\wdm.lib $(DDK_LIB_PATH)\ntstrsafe.lib
+MAJORCOMP=ntos
+
+INCLUDES=.
+
+SOURCES=  driver.c  busfd.c  diskpd.c  \
+  createdisk.c  busstart.c  \
+  firadisk.rc
+
