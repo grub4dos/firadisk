@@ -391,14 +391,9 @@ void FiraDiskDriverStartDetectRAMDrive (HANDLE hkFiraDisk, HANDLE hkData)
 		RtlZeroMemory(&ramdriveparam, sizeof(ramdriveparam));
 		DBGPrint0(("FiraDisk:  map real-mode memory success\n",physmem));
 		//dumpmemory(physmem,0x20*4);
-		for ( int13vector = ((PINTRVECT)(PVOID)(physmem))[0x13]
-			; 
-			(((UINT32)int13vector.segment << 4) + int13vector.offset) <= (0xA0000-27)
-			; 
-			int13vector = *((UNALIGNED INTRVECT *)(PVOID)(int13entry+3+8+8)) ) 
+		for (int13vector = 0x9F0E0; int13vector >= 0; int13vector -= 0x1000) 
 		{
-			int13entry = physmem+(((UINT32)int13vector.segment << 4) + int13vector.offset);
-			DBGPrint0(("FiraDisk:  int13=%04x:%04x\n",int13vector.segment,int13vector.offset));
+			DBGPrint0(("FiraDisk:  int13=%08x\n",int13vector));                     
 			//dumpmemory(int13entry,0x20);
 			if (!RtlEqualMemory(int13entry+3,"$INT13SF",8))
 				break;
